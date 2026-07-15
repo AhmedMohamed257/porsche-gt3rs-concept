@@ -1,0 +1,6 @@
+{
+  "name": "Minimalist Concept Banner",
+  "description": "A high-fidelity minimalist web banner and landing page featuring the conceptual layout from the FFZERO1 showcase, styled with a pure black background and crisp white typography in DM Sans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

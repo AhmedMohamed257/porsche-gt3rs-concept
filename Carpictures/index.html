@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Animation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            /* Hide scrollbar for aesthetics */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        body::-webkit-scrollbar { 
+            display: none; /* Safari and Chrome */
+        }
+        
+        #scroll-container {
+            height: 800vh; /* Adjust for scroll duration/speed */
+        }
+        
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="scroll-container"></div>
+    <canvas id="animation-canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('animation-canvas');
+        const context = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            render(currentFrameIndex);
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+
+        const frameCount = 300;
+        const currentFrame = index => (
+            `ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+        );
+
+        const images = [];
+        let currentFrameIndex = 0;
+
+        // Preload all images
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+        }
+
+        // Render first frame as soon as it loads
+        images[0].onload = () => {
+            resizeCanvas();
+        };
+
+        const render = (index) => {
+            if (images[index] && images[index].complete && images[index].naturalWidth !== 0) {
+                const img = images[index];
+                const canvasRatio = canvas.width / canvas.height;
+                const imgRatio = img.width / img.height;
+                
+                let renderWidth, renderHeight, xOffset, yOffset;
+                
+                if (canvasRatio > imgRatio) {
+                    renderWidth = canvas.width;
+                    renderHeight = canvas.width / imgRatio;
+                    xOffset = 0;
+                    yOffset = (canvas.height - renderHeight) / 2;
+                } else {
+                    renderWidth = canvas.height * imgRatio;
+                    renderHeight = canvas.height;
+                    xOffset = (canvas.width - renderWidth) / 2;
+                    yOffset = 0;
+                }
+                
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(img, xOffset, yOffset, renderWidth, renderHeight);
+            }
+        };
+
+        window.addEventListener('scroll', () => {  
+            const scrollTop = document.documentElement.scrollTop;
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollFraction = scrollTop / maxScrollTop;
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(scrollFraction * frameCount)
+            );
+            
+            requestAnimationFrame(() => {
+                currentFrameIndex = frameIndex;
+                render(frameIndex);
+            });
+        });
+    </script>
+</body>
+</html>
