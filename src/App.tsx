@@ -119,7 +119,7 @@ export default function App() {
     const loadedImages: HTMLImageElement[] = [];
     const frameCount = 300;
     const currentFrame = (index: number) =>
-      `/frames/ezgif-frame-${(index + 1).toString().padStart(3, "0")}.jpg`;
+      `/ezgif-frame-${(index + 1).toString().padStart(3, "0")}.jpg`;
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = currentFrame(i);

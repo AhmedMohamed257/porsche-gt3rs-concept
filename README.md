@@ -52,15 +52,17 @@ The project was built with the assistance of **AI-powered development tools** (G
 
 ```
 minimalist-concept-banner/
-├── public/
-│   └── frames/               # 300 JPEG frames for scroll animation
-│       ├── ezgif-frame-001.jpg
-│       └── ...
+├── assets/                   # Additional assets
+├── Carpictures/              # Standalone scroll animation & image frames
+│   ├── index.html            # Standalone HTML scrollable version
+│   ├── Porsche.png           # Website favicon
+│   └── ezgif-frame-001.jpg...# 300 JPEG frames for React app scroll animation
+├── node_modules/             # Installed dependencies
 ├── src/
 │   ├── App.tsx               # Main application component
 │   ├── main.tsx              # React entry point
 │   └── index.css             # Global styles + Tailwind + Google Fonts
-├── index.html
+├── index.html                # Main React entry HTML
 ├── vite.config.ts
 ├── tsconfig.json
 └── package.json
@@ -110,7 +112,7 @@ npm run lint
 
 ## Frame Animation Setup
 
-The scroll animation requires **300 sequential JPEG frames** placed in the `public/frames/` directory, named in the format:
+The scroll animation requires **300 sequential JPEG frames** placed in the `Carpictures/` directory, named in the format:
 
 ```
 ezgif-frame-001.jpg
